@@ -1,0 +1,57 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+/**
+ * Main
+ */
+project.mainClassName = "com.sims.Main"
+
+/**
+ * JRebel
+ */
+project.applicationDefaultJvmArgs = [
+        "-noverify",
+        "-javaagent:$rootDir\\jrebel\\jrebel.jar",
+        "-Drebel.log=trace -Drebel.log.file=jrebel.log",
+        "-Drebel.disable_update=true",
+        "-Drebel.spring_plugin=false -Drebel.hibernate_plugin=false -Drebel.tiles2_plugin=false -Drebel.spring_plugin=false -Drebel.remoting_plugin=true",
+        "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005",
+        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005",
+        "-Xms256m",
+        "-Xmx256m",
+        "-XX:MaxPermSize=256m",
+        "-Dfile.encoding=UTF-8"
+]
+
+dependencies {
+    // PROJECTS
+    compile project(':persistence')
+
+    // Logging
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    runtime 'org.slf4j:slf4j-log4j12:1.7.5'
+
+    // SPRING
+    compile "org.springframework:spring-aspects:$springVersion"
+    compile "org.springframework:spring-webmvc:$springVersion"
+    compile "org.springframework:spring-tx:$springVersion"
+    // for spring-mvc json
+    runtime 'com.fasterxml.jackson.core:jackson-core:2.5.0'
+    runtime 'com.fasterxml.jackson.core:jackson-databind:2.5.0'
+    runtime 'org.codehaus.jackson:jackson-core-asl:1.9.13'
+    runtime 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+
+    // WEB
+    // http://www.eclipse.org/jetty/documentation/9.2.7.v20150116/advanced-embedding.html
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile "org.eclipse.jetty.aggregate:jetty-all:$jettyVersion"
+    compile "org.eclipse.jetty:jetty-annotations:$jettyVersion"
+    compile "org.eclipse.jetty:apache-jsp:$jettyVersion"
+    compile "org.eclipse.jetty:apache-jstl:$jettyVersion"
+
+    // Validation provider
+    compile "org.hibernate:hibernate-validator:5.1.3.Final"
+
+    // TEST
+    testCompile 'junit:junit:4.11'
+}

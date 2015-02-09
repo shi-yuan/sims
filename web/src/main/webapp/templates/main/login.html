@@ -1,0 +1,20 @@
+<div class="index_main" ng-controller="LoginCtrl">
+    <div class="login">
+        <form ng-submit="login()">
+            <label>身<span style="visibility:hidden;">身</span>份：
+                <select name="identity"
+                        ng-model="form.identity"
+                        ng-options="item.value as item.name for item in identities"
+                        ng-init="form.identity = identities[0].value"></select>
+            </label>
+
+            <p><label>用户名：<input type="text" name="username" ng-model="form.username" required/></label></p>
+
+            <p><label>密<span style="visibility:hidden;">身</span>码：<input type="password" name="password" ng-model="form.password" required/></label></p>
+
+            <p>
+                <button class="submit-btn">登录</button>
+            </p>
+        </form>
+    </div>
+</div>

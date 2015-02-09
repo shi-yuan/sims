@@ -1,0 +1,42 @@
+<div ng-controller="ManagerCtrl" ng-init="studentList()">
+    <div class="pop_box">
+        <div class="title">学生列表</div>
+        <div class="pop_holder">
+            <p><input type="button" class="add_btn" ng-click="studentCreate()" value="新增"/></p>
+            <table align="center" border="0" cellpadding="0" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>年龄</th>
+                    <th>专业</th>
+                    <th>联系方式</th>
+                    <th>地址</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in students">
+                    <td ng-bind="$index + 1"></td>
+                    <td ng-bind="item.sno"></td>
+                    <td ng-bind="item.name"></td>
+                    <td ng-bind="item.age"></td>
+                    <td ng-bind="item.profession"></td>
+                    <td ng-bind="item.telephone"></td>
+                    <td ng-bind="item.address"></td>
+                    <td>
+                        <span ng-show="-1 < $index">
+                            <a href="javascript:void(0);" ng-click="">编辑</a>&nbsp;&nbsp;&nbsp;
+                            <a href="javascript:void(0);" ng-click="">删除</a>
+                        </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <p class="shop" style="text-align:center;">
+        <input type="button" class="back_btn" ng-click="back()" value="返回"/>
+    </p>
+</div>

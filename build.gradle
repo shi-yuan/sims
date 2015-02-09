@@ -1,0 +1,47 @@
+ext {
+    javaCompatibility = '1.8'
+    springVersion = '4.1.4.RELEASE'
+    // https://github.com/jetty-project/embedded-jetty-jsp/blob/master/pom.xml
+    jettyVersion = '9.2.7.v20150116'
+
+    //
+    encoding = "UTF-8"
+}
+
+allprojects {
+    version = 1.0
+
+    // 仓库
+    buildscript {
+        repositories {
+            mavenLocal()
+            maven { url "http://maven.oschina.net/content/groups/public/" }
+            mavenCentral()
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.oschina.net/content/groups/public/" }
+        mavenCentral()
+    }
+}
+
+subprojects {
+    afterEvaluate { project ->
+        def javaProject = project.plugins.hasPlugin('java')
+        if (javaProject) {
+
+            //
+            jar {
+                manifest.attributes provider: 'gradle'
+            }
+
+            tasks.withType(JavaCompile) {
+                sourceCompatibility = javaCompatibility
+                targetCompatibility = javaCompatibility
+                options.encoding = encoding
+            }
+        }
+    }
+}

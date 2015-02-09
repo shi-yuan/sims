@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>学生信息管理系统</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- build:css css/app.css -->
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/jquery.sims.css">
+    <!-- endbuild -->
+
+    <!-- build:js js/lib.js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <!--<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>-->
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/jquery/jquery.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js js/app.js -->
+    <script src="app/app.js"></script>
+    <script src="app/routes.js"></script>
+    <script src="app/components/main/controllers/manager.controller.js"></script>
+    <script src="app/components/main/controllers/login.controller.js"></script>
+    <script src="app/components/main/services/ajax.service.js"></script>
+    <script src="app/components/plugin/jquery.sims.js"></script>
+    <script src="app/components/plugin/jquery.form.js"></script>
+    <!-- endbuild -->
+</head>
+<body ng-app="app">
+<ng-view ng-controller="ApplicationCtrl as app"></ng-view>
+</body>
+</html>

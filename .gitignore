@@ -1,0 +1,11 @@
+/.idea
+/.gradle
+/**/*.iml
+/**/build
+/gradle
+/**/logs
+/**/*.log
+/jrebel
+/**/node_modules
+/**/bower_components
+/**/.tmp
