@@ -21,14 +21,21 @@
                 controller: 'ManagerCtrl',
                 controllerAs: 'manager'
             }).
+            // 学生管理
             when('/manager/student', {
                 templateUrl: 'templates/main/manager/student.html',
                 controller: 'ManagerCtrl',
                 controllerAs: 'manager'
             }).
+            // 教师管理
+            when('/manager/teacher', {
+                templateUrl: 'templates/main/manager/teacher.html',
+                controller: 'ManagerCtrl',
+                controllerAs: 'manager'
+            }).
 
             otherwise({
-                redirectTo: '/login'
+                redirectTo: '/'
             });
     }
 })();

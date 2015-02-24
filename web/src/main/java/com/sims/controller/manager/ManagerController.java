@@ -5,7 +5,9 @@ import com.mysema.query.sql.dml.SQLInsertClause;
 import com.sims.AjaxResponse;
 import com.sims.controller.AbstractController;
 import com.sims.persistence.QStudent;
+import com.sims.persistence.QTeacher;
 import com.sims.persistence.Student;
+import com.sims.persistence.Teacher;
 import com.sims.persistence.sql.cmd.Insert;
 import com.sims.persistence.sql.cmd.Select;
 import org.slf4j.Logger;
@@ -47,7 +49,7 @@ public class ManagerController extends AbstractController {
     }
 
     /**
-     * 新增学生列表
+     * 新增学生信息
      */
     @RequestMapping(value = "/student/create", method = RequestMethod.POST)
     @ResponseBody
@@ -63,6 +65,49 @@ public class ManagerController extends AbstractController {
                         .set(QStudent.student.age, student.getAge())
                         .set(QStudent.student.telephone, student.getTelephone())
                         .set(QStudent.student.address, student.getAddress())
+                        .execute();
+            }
+        });
+        return AjaxResponse.createSuccess();
+    }
+
+    /**
+     * 获取教师列表
+     */
+    @RequestMapping(value = "/teacher/list", method = RequestMethod.GET)
+    @ResponseBody
+    public Object teacherList() {
+        ModelMap map = new ModelMap();
+        map.put("teachers", repositories.teacher.execute(new Select() {
+            @Override
+            public Object execute(SQLQuery query) {
+                return query.from(QTeacher.teacher).list(QTeacher.teacher);
+            }
+        }));
+        return AjaxResponse.createSuccess(map);
+    }
+
+    /**
+     * 教师信息页面
+     */
+    @RequestMapping(value = "/teacher/view", method = RequestMethod.GET)
+    public String teacherView() {
+        return "templates/main/manager/teacher_create";
+    }
+
+    /**
+     * 新增教师信息
+     */
+    @RequestMapping(value = "/teacher/create", method = RequestMethod.POST)
+    @ResponseBody
+    public Object createTeacher(Teacher teacher) {
+        repositories.teacher.execute(new Insert<QTeacher>() {
+            @Override
+            public long execute(SQLInsertClause query) {
+                return query
+                        .set(QTeacher.teacher.sno, teacher.getSno())
+                        .set(QTeacher.teacher.name, teacher.getName())
+                        .set(QTeacher.teacher.password, teacher.getPassword())
                         .execute();
             }
         });
