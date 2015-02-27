@@ -35,7 +35,7 @@
             }).
 
             otherwise({
-                redirectTo: '/'
+                redirectTo: '/login'
             });
     }
 })();
