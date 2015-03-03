@@ -1,0 +1,32 @@
+<style type="text/css">
+    table {
+        border-collapse: collapse;
+    }
+
+    table tr td {
+        border: 1px solid #5e5e5e;
+        padding: 2px 5px;
+    }
+
+    table tr td input.txt {
+        width: 200px;
+    }
+</style>
+<div class="pop_box" style="width:100%;">
+    <div class="title" style="text-align:center;">新增毕设题目</div>
+    <div class="pop_holder" style="text-align:center;">
+        <form name="topicForm">
+            <table border="0" align="center" cellpadding="0" cellspacing="0" style="width:600px;">
+                <tr>
+                    <td>毕设题目</td>
+                    <td><label><input class="txt" type="text" name="name" required/></label></td>
+                </tr>
+            </table>
+            <div align="center">
+                <input type="submit" class="certain_btn" value="保存"/>
+                &nbsp;&nbsp;
+                <input type="button" class="close_btn ui-dialog-close" id="btnClose" value="关闭"/>
+            </div>
+        </form>
+    </div>
+</div>

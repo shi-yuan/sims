@@ -21,7 +21,7 @@
                     if (0 == identity) {
 
                     } else if (1 == identity) {
-
+                        $window.location.href = '#/teacher/index';
                     } else {
                         $window.location.href = '#/manager/index';
                     }

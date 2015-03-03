@@ -34,6 +34,21 @@
                 controllerAs: 'manager'
             }).
 
+            // 教师
+            // ====================
+            // 主页
+            when('/teacher/index', {
+                templateUrl: 'templates/main/teacher/index.html',
+                controller: 'TeacherCtrl',
+                controllerAs: 'teacher'
+            }).
+            // 毕设题目管理
+            when('/teacher/topic', {
+                templateUrl: 'templates/main/teacher/topic.html',
+                controller: 'TeacherCtrl',
+                controllerAs: 'teacher'
+            }).
+
             otherwise({
                 redirectTo: '/login'
             });
