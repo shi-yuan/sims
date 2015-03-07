@@ -33,6 +33,12 @@
                 controller: 'ManagerCtrl',
                 controllerAs: 'manager'
             }).
+            // 查看选题情况
+            when('/manager/topic', {
+                templateUrl: 'templates/main/manager/topic.html',
+                controller: 'ManagerCtrl',
+                controllerAs: 'manager'
+            }).
 
             // 教师
             // ====================

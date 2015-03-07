@@ -1,13 +1,13 @@
 package com.sims.controller.manager;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLInsertClause;
 import com.sims.AjaxResponse;
 import com.sims.controller.AbstractController;
-import com.sims.persistence.QStudent;
-import com.sims.persistence.QTeacher;
-import com.sims.persistence.Student;
-import com.sims.persistence.Teacher;
+import com.sims.persistence.*;
 import com.sims.persistence.sql.cmd.Insert;
 import com.sims.persistence.sql.cmd.Select;
 import org.slf4j.Logger;
@@ -17,6 +17,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/manager")
@@ -112,5 +116,39 @@ public class ManagerController extends AbstractController {
             }
         });
         return AjaxResponse.createSuccess();
+    }
+
+    /**
+     * 获取毕设题目列表
+     */
+    @RequestMapping(value = "/topic/list", method = RequestMethod.GET)
+    @ResponseBody
+    public Object topicList() {
+        ModelMap map = new ModelMap();
+        map.put("topics", repositories.topic.execute(new Select() {
+            @Override
+            public List<ModelMap> execute(SQLQuery query) {
+                List<ModelMap> list = new ArrayList<>();
+                List<Tuple> results = query.from(QTopic.topic)
+                        .innerJoin(QTeacher.teacher).on(QTopic.topic.teacherId.eq(QTeacher.teacher.id))
+                        .leftJoin(QStudent.student).on(QTopic.topic.studentId.eq(QStudent.student.id))
+                        .list(QTopic.topic.name, QTeacher.teacher.name, QStudent.student.name);
+                if (null != results && !results.isEmpty()) {
+                    list.addAll(Collections2.transform(results, new Function<Tuple, ModelMap>() {
+                        @Nullable
+                        @Override
+                        public ModelMap apply(Tuple input) {
+                            ModelMap m = new ModelMap();
+                            m.put("topicName", input.get(QTopic.topic.name));
+                            m.put("teacherName", input.get(QTeacher.teacher.name));
+                            m.put("studentName", input.get(QStudent.student.name));
+                            return m;
+                        }
+                    }));
+                }
+                return list;
+            }
+        }));
+        return AjaxResponse.createSuccess(map);
     }
 }

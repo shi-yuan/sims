@@ -75,5 +75,18 @@
                 }
             });
         };
+
+        // 查看选题情况
+        // ====================
+        // 获取毕设题目列表
+        $scope.topicList = function () {
+            AjaxService.get('/manager/topic/list', function (data) {
+                if (data.success) {
+                    $scope.topics = data.data.topics;
+                } else {
+                    alert('获取毕设题目列表失败');
+                }
+            });
+        };
     }
 })();

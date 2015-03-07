@@ -14,7 +14,7 @@ public enum UserIdentity {
     /**
      * 管理员
      */
-    MANAGER(1);
+    MANAGER(2);
 
     private int value;
 

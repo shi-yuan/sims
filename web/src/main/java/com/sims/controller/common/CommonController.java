@@ -27,8 +27,6 @@ public class CommonController extends AbstractController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public Object login(@RequestParam String identity, @RequestParam String username, @RequestParam String password, HttpServletRequest request) {
-        logger.info("login username: {}", username);
-
         Object user;
         if (String.valueOf(UserIdentity.STUDENT.value()).equals(identity)) {
             // 如果是学生
@@ -63,6 +61,8 @@ public class CommonController extends AbstractController {
         }
         if (null != user) {
             request.getSession(true).setAttribute("user", user);
+            logger.info("{}[username={}] login", UserIdentity.valueOf(Integer.parseInt(identity)), username);
+
             return AjaxResponse.createSuccess();
         } else {
             return AjaxResponse.createFailure(null, null);
