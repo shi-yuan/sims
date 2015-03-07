@@ -18,11 +18,18 @@
 
     /* Common application conroller */
     angular.module('app').controller('ApplicationCtrl', ApplicationCtrl);
-    ApplicationCtrl.$inject = ['$scope', '$window'];
-    function ApplicationCtrl($scope, $window) {
+    ApplicationCtrl.$inject = ['$scope', '$window', 'AjaxService'];
+    function ApplicationCtrl($scope, $window, AjaxService) {
         // 返回上一页
         $scope.back = function () {
             $window.history.back();
+        };
+
+        // 退出系统
+        $scope.logout = function () {
+            AjaxService.post('/logout', function () {
+                $window.location.href = "#/login";
+            });
         };
     }
 })();

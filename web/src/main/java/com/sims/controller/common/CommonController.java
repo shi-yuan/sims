@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class CommonController extends AbstractController {
@@ -67,5 +68,15 @@ public class CommonController extends AbstractController {
         } else {
             return AjaxResponse.createFailure(null, null);
         }
+    }
+
+    /**
+     * 退出系统
+     */
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @ResponseBody
+    public Object logout(HttpSession session) {
+        session.removeAttribute("user");
+        return AjaxResponse.createSuccess();
     }
 }
