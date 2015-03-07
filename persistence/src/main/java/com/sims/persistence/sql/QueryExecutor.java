@@ -6,14 +6,18 @@ import com.mysema.query.sql.dml.SQLDeleteClause;
 import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.dml.SQLMergeClause;
 import com.mysema.query.sql.dml.SQLUpdateClause;
-import org.springframework.beans.BeanUtils;
-import org.springframework.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.sql.Connection;
 
 public abstract class QueryExecutor {
+
+    private static final Logger logger = LoggerFactory.getLogger(QueryExecutor.class);
+
     public Object execute(SQLQuery query) {
         return null;
     }
@@ -38,8 +42,18 @@ public abstract class QueryExecutor {
 
     @SuppressWarnings("unchecked")
     protected <T> T createQ() {
-        Class<T> type = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        Constructor<?> con = ClassUtils.getConstructorIfAvailable(type, String.class);
-        return (T) BeanUtils.instantiateClass(con, "null");
+        try {
+            Class<T> type = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            for (Field field : type.getDeclaredFields()) {
+                int modifiers = field.getModifiers();
+                if (Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers) && Modifier.isFinal(modifiers) && field.getType().equals(type)) {
+                    return (T) field.get(null);
+                }
+            }
+            throw new RuntimeException("不存在对应的Q实例");
+        } catch (Exception e) {
+            logger.error("创建Q实例出现异常: {}", e);
+            throw new RuntimeException(e);
+        }
     }
 }

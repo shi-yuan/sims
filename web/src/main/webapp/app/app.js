@@ -18,7 +18,11 @@
 
     /* Common application conroller */
     angular.module('app').controller('ApplicationCtrl', ApplicationCtrl);
-    ApplicationCtrl.$inject = ['$window'];
-    function ApplicationCtrl($window) {
+    ApplicationCtrl.$inject = ['$scope', '$window'];
+    function ApplicationCtrl($scope, $window) {
+        // 返回上一页
+        $scope.back = function () {
+            $window.history.back();
+        };
     }
 })();

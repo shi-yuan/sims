@@ -19,7 +19,7 @@
                 if (data.success) {
                     var identity = $scope.form.identity;
                     if (0 == identity) {
-
+                        $window.location.href = '#/student/index';
                     } else if (1 == identity) {
                         $window.location.href = '#/teacher/index';
                     } else {

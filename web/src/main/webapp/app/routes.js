@@ -49,6 +49,21 @@
                 controllerAs: 'teacher'
             }).
 
+            // 学生
+            // ====================
+            // 主页
+            when('/student/index', {
+                templateUrl: 'templates/main/student/index.html',
+                controller: 'StudentCtrl',
+                controllerAs: 'student'
+            }).
+            // 选择毕设题目
+            when('/student/topic', {
+                templateUrl: 'templates/main/student/topic.html',
+                controller: 'StudentCtrl',
+                controllerAs: 'student'
+            }).
+
             otherwise({
                 redirectTo: '/login'
             });

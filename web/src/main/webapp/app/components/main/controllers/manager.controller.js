@@ -2,13 +2,8 @@
     'use strict';
 
     angular.module('app').controller('ManagerCtrl', ManagerCtrl);
-    ManagerCtrl.$inject = ['$scope', 'AjaxService', '$window'];
-    function ManagerCtrl($scope, AjaxService, $window) {
-        // 返回上一页
-        $scope.back = function () {
-            $window.history.back();
-        };
-
+    ManagerCtrl.$inject = ['$scope', 'AjaxService'];
+    function ManagerCtrl($scope, AjaxService) {
         // 学生管理
         // ====================
         // 获取学生列表

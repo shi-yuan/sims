@@ -2,13 +2,8 @@
     'use strict';
 
     angular.module('app').controller('TeacherCtrl', TeacherCtrl);
-    TeacherCtrl.$inject = ['$scope', 'AjaxService', '$window'];
-    function TeacherCtrl($scope, AjaxService, $window) {
-        // 返回上一页
-        $scope.back = function () {
-            $window.history.back();
-        };
-
+    TeacherCtrl.$inject = ['$scope', 'AjaxService'];
+    function TeacherCtrl($scope, AjaxService) {
         // 获取毕设题目列表
         $scope.topicList = function () {
             AjaxService.get('/teacher/topic/list', function (data) {
