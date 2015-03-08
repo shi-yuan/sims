@@ -70,6 +70,12 @@
                 controllerAs: 'student'
             }).
 
+            // 修改密码
+            // ====================
+            when('/:identity/password/update/:userId', {
+                templateUrl: 'templates/main/password_update.html'
+            }).
+
             otherwise({
                 redirectTo: '/login'
             });

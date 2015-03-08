@@ -103,7 +103,7 @@ public class StudentController extends AbstractController {
             return AjaxResponse.createSuccess();
         } else {
             // 已选择
-            return AjaxResponse.createFailure("502", "该毕设题目已被选择");
+            return AjaxResponse.createFailure("503", "该毕设题目已被选择");
         }
     }
 }

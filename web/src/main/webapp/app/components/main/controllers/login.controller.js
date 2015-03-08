@@ -18,6 +18,7 @@
             AjaxService.post('/login', $scope.form, function (data) {
                 if (data.success) {
                     var identity = $scope.form.identity;
+                    $scope.app.userId = data.data.userId;
                     if (0 == identity) {
                         $window.location.href = '#/student/index';
                     } else if (1 == identity) {
