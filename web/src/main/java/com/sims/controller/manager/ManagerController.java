@@ -5,17 +5,20 @@ import com.google.common.collect.Collections2;
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLInsertClause;
+import com.mysema.query.sql.dml.SQLUpdateClause;
 import com.sims.AjaxResponse;
 import com.sims.controller.AbstractController;
 import com.sims.persistence.*;
 import com.sims.persistence.sql.cmd.Insert;
 import com.sims.persistence.sql.cmd.Select;
+import com.sims.persistence.sql.cmd.Update;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Nullable;
@@ -49,7 +52,23 @@ public class ManagerController extends AbstractController {
      */
     @RequestMapping(value = "/student/view", method = RequestMethod.GET)
     public String studentView() {
-        return "templates/main/manager/student_create";
+        return "templates/main/manager/student_update";
+    }
+
+    /**
+     * 获取学生信息
+     */
+    @RequestMapping(value = "/student/show", method = RequestMethod.GET)
+    @ResponseBody
+    public Object studentShow(@RequestParam String sno) {
+        ModelMap map = new ModelMap();
+        map.put("student", repositories.student.execute(new Select() {
+            @Override
+            public Object execute(SQLQuery query) {
+                return query.from(QStudent.student).where(QStudent.student.sno.eq(sno)).singleResult(QStudent.student);
+            }
+        }));
+        return AjaxResponse.createSuccess(map);
     }
 
     /**
@@ -63,6 +82,28 @@ public class ManagerController extends AbstractController {
             public long execute(SQLInsertClause query) {
                 return query
                         .set(QStudent.student.sno, student.getSno())
+                        .set(QStudent.student.name, student.getName())
+                        .set(QStudent.student.profession, student.getProfession())
+                        .set(QStudent.student.password, student.getPassword())
+                        .set(QStudent.student.age, student.getAge())
+                        .set(QStudent.student.telephone, student.getTelephone())
+                        .set(QStudent.student.address, student.getAddress())
+                        .execute();
+            }
+        });
+        return AjaxResponse.createSuccess();
+    }
+
+    /**
+     * 编辑学生信息
+     */
+    @RequestMapping(value = "/student/update", method = RequestMethod.PUT)
+    @ResponseBody
+    public Object updateStudent(Student student) {
+        repositories.student.execute(new Update<QStudent>() {
+            @Override
+            public long execute(SQLUpdateClause query) {
+                return query.where(QStudent.student.sno.eq(student.getSno()))
                         .set(QStudent.student.name, student.getName())
                         .set(QStudent.student.profession, student.getProfession())
                         .set(QStudent.student.password, student.getPassword())
@@ -96,7 +137,23 @@ public class ManagerController extends AbstractController {
      */
     @RequestMapping(value = "/teacher/view", method = RequestMethod.GET)
     public String teacherView() {
-        return "templates/main/manager/teacher_create";
+        return "templates/main/manager/teacher_update";
+    }
+
+    /**
+     * 获取教师信息
+     */
+    @RequestMapping(value = "/teacher/show", method = RequestMethod.GET)
+    @ResponseBody
+    public Object teacherShow(@RequestParam String sno) {
+        ModelMap map = new ModelMap();
+        map.put("teacher", repositories.teacher.execute(new Select() {
+            @Override
+            public Object execute(SQLQuery query) {
+                return query.from(QTeacher.teacher).where(QTeacher.teacher.sno.eq(sno)).singleResult(QTeacher.teacher);
+            }
+        }));
+        return AjaxResponse.createSuccess(map);
     }
 
     /**
@@ -110,6 +167,24 @@ public class ManagerController extends AbstractController {
             public long execute(SQLInsertClause query) {
                 return query
                         .set(QTeacher.teacher.sno, teacher.getSno())
+                        .set(QTeacher.teacher.name, teacher.getName())
+                        .set(QTeacher.teacher.password, teacher.getPassword())
+                        .execute();
+            }
+        });
+        return AjaxResponse.createSuccess();
+    }
+
+    /**
+     * 编辑教师信息
+     */
+    @RequestMapping(value = "/teacher/update", method = RequestMethod.PUT)
+    @ResponseBody
+    public Object updateTeacher(Teacher teacher) {
+        repositories.teacher.execute(new Update<QTeacher>() {
+            @Override
+            public long execute(SQLUpdateClause query) {
+                return query.where(QTeacher.teacher.sno.eq(teacher.getSno()))
                         .set(QTeacher.teacher.name, teacher.getName())
                         .set(QTeacher.teacher.password, teacher.getPassword())
                         .execute();
