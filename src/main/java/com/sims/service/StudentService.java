@@ -17,7 +17,7 @@ public class StudentService extends AbstractService {
      * 选择毕设题目
      */
     @Transactional
-    public void selectTopic(int studentId, int topicId) {
+    public void selectTopic(final int studentId, final int topicId) {
         // 取消选择
         repositories.topic.execute(new Update<QTopic>() {
             @Override

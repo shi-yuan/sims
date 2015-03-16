@@ -41,7 +41,7 @@ public class TeacherController extends AbstractController {
     @RequestMapping(value = "/topic/list", method = RequestMethod.GET)
     @ResponseBody
     public Object topicList(HttpServletRequest request) {
-        Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+        final Teacher teacher = (Teacher) request.getSession().getAttribute("user");
         ModelMap map = new ModelMap();
         map.put("topics", repositories.topic.execute(new Select() {
             @Override
@@ -83,7 +83,7 @@ public class TeacherController extends AbstractController {
      */
     @RequestMapping(value = "/topic/show", method = RequestMethod.GET)
     @ResponseBody
-    public Object topicShow(@RequestParam Integer id) {
+    public Object topicShow(@RequestParam final Integer id) {
         ModelMap map = new ModelMap();
         map.put("topic", repositories.topic.execute(new Select() {
             @Override
@@ -99,8 +99,8 @@ public class TeacherController extends AbstractController {
      */
     @RequestMapping(value = "/topic/create", method = RequestMethod.POST)
     @ResponseBody
-    public Object createTopic(Topic topic, HttpServletRequest request) {
-        Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+    public Object createTopic(final Topic topic, HttpServletRequest request) {
+        final Teacher teacher = (Teacher) request.getSession().getAttribute("user");
         repositories.topic.execute(new Insert<QTopic>() {
             @Override
             public long execute(SQLInsertClause query) {
@@ -118,7 +118,7 @@ public class TeacherController extends AbstractController {
      */
     @RequestMapping(value = "/topic/update", method = RequestMethod.PUT)
     @ResponseBody
-    public Object updateTopic(Topic topic) {
+    public Object updateTopic(final Topic topic) {
         repositories.topic.execute(new Update<QTopic>() {
             @Override
             public long execute(SQLUpdateClause query) {

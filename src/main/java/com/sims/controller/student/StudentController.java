@@ -36,7 +36,7 @@ public class StudentController extends AbstractController {
     @RequestMapping(value = "/topic/list", method = RequestMethod.GET)
     @ResponseBody
     public Object topicList(HttpServletRequest request) {
-        Student student = (Student) request.getSession().getAttribute("user");
+        final Student student = (Student) request.getSession().getAttribute("user");
         ModelMap map = new ModelMap();
         // 我的毕设题目信息
         map.put("myTopic", repositories.topic.execute(new Select() {
@@ -88,7 +88,7 @@ public class StudentController extends AbstractController {
      */
     @RequestMapping(value = "/topic/select", method = RequestMethod.PUT)
     @ResponseBody
-    public Object selectTopic(@RequestParam int topicId, HttpServletRequest request) {
+    public Object selectTopic(@RequestParam final int topicId, HttpServletRequest request) {
         Student student = (Student) request.getSession().getAttribute("user");
         Integer result = repositories.topic.execute(new Select() {
             @Override

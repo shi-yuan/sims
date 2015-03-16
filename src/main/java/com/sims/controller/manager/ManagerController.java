@@ -60,7 +60,7 @@ public class ManagerController extends AbstractController {
      */
     @RequestMapping(value = "/student/show", method = RequestMethod.GET)
     @ResponseBody
-    public Object studentShow(@RequestParam String sno) {
+    public Object studentShow(@RequestParam final String sno) {
         ModelMap map = new ModelMap();
         map.put("student", repositories.student.execute(new Select() {
             @Override
@@ -76,7 +76,7 @@ public class ManagerController extends AbstractController {
      */
     @RequestMapping(value = "/student/create", method = RequestMethod.POST)
     @ResponseBody
-    public Object createStudent(Student student) {
+    public Object createStudent(final Student student) {
         repositories.student.execute(new Insert<QStudent>() {
             @Override
             public long execute(SQLInsertClause query) {
@@ -99,7 +99,7 @@ public class ManagerController extends AbstractController {
      */
     @RequestMapping(value = "/student/update", method = RequestMethod.PUT)
     @ResponseBody
-    public Object updateStudent(Student student) {
+    public Object updateStudent(final Student student) {
         repositories.student.execute(new Update<QStudent>() {
             @Override
             public long execute(SQLUpdateClause query) {
@@ -145,7 +145,7 @@ public class ManagerController extends AbstractController {
      */
     @RequestMapping(value = "/teacher/show", method = RequestMethod.GET)
     @ResponseBody
-    public Object teacherShow(@RequestParam String sno) {
+    public Object teacherShow(@RequestParam final String sno) {
         ModelMap map = new ModelMap();
         map.put("teacher", repositories.teacher.execute(new Select() {
             @Override
@@ -161,7 +161,7 @@ public class ManagerController extends AbstractController {
      */
     @RequestMapping(value = "/teacher/create", method = RequestMethod.POST)
     @ResponseBody
-    public Object createTeacher(Teacher teacher) {
+    public Object createTeacher(final Teacher teacher) {
         repositories.teacher.execute(new Insert<QTeacher>() {
             @Override
             public long execute(SQLInsertClause query) {
@@ -180,7 +180,7 @@ public class ManagerController extends AbstractController {
      */
     @RequestMapping(value = "/teacher/update", method = RequestMethod.PUT)
     @ResponseBody
-    public Object updateTeacher(Teacher teacher) {
+    public Object updateTeacher(final Teacher teacher) {
         repositories.teacher.execute(new Update<QTeacher>() {
             @Override
             public long execute(SQLUpdateClause query) {

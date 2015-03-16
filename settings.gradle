@@ -1,2 +1,2 @@
-include "web", "persistence"
+rootProject.name = 'sims'
 

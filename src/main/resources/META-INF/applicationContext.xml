@@ -28,7 +28,5 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <beans>
-        <context:property-placeholder location="classpath*:META-INF/application.properties"/>
-    </beans>
+    <context:property-placeholder location="classpath*:META-INF/application.properties"/>
 </beans>

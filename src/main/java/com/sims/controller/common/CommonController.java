@@ -30,7 +30,7 @@ public class CommonController extends AbstractController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Object login(@RequestParam String identity, @RequestParam String username, @RequestParam String password, HttpServletRequest request) {
+    public Object login(@RequestParam String identity, @RequestParam final String username, @RequestParam final String password, HttpServletRequest request) {
         Object user, userId = null;
         if (String.valueOf(UserIdentity.STUDENT.value()).equals(identity)) {
             // 如果是学生
@@ -89,7 +89,7 @@ public class CommonController extends AbstractController {
      */
     @RequestMapping(value = "/password/update", method = RequestMethod.PUT)
     @ResponseBody
-    public Object updatePassword(@RequestParam String identity, @RequestParam final int userId, @RequestParam String newPassword) {
+    public Object updatePassword(@RequestParam String identity, @RequestParam final int userId, @RequestParam final String newPassword) {
         if (String.valueOf(UserIdentity.STUDENT.value()).equals(identity)) {
             // 如果是学生
             repositories.student.execute(new Update<QStudent>() {
