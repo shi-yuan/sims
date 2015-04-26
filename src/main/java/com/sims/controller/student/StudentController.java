@@ -46,10 +46,11 @@ public class StudentController extends AbstractController {
                 Tuple result = query.from(QTopic.topic, QTeacher.teacher)
                         .where(QTopic.topic.teacherId.eq(QTeacher.teacher.id))
                         .where(QTopic.topic.studentId.eq(student.getId()))
-                        .singleResult(QTopic.topic.name, QTeacher.teacher.name);
+                        .singleResult(QTopic.topic.name, QTopic.topic.describe, QTeacher.teacher.name);
                 if (null != result) {
                     m = new ModelMap();
                     m.put("topicName", result.get(QTopic.topic.name));
+                    m.put("describe", result.get(QTopic.topic.describe));
                     m.put("teacherName", result.get(QTeacher.teacher.name));
                 }
                 return m;
@@ -63,7 +64,7 @@ public class StudentController extends AbstractController {
                 List<Tuple> results = query.from(QTopic.topic, QTeacher.teacher)
                         .where(QTopic.topic.teacherId.eq(QTeacher.teacher.id))
                         .where(QTopic.topic.studentId.isNull())
-                        .list(QTopic.topic.id, QTopic.topic.name, QTeacher.teacher.name);
+                        .list(QTopic.topic.id, QTopic.topic.name, QTopic.topic.describe, QTeacher.teacher.name);
                 if (null != results && !results.isEmpty()) {
                     list.addAll(Collections2.transform(results, new Function<Tuple, ModelMap>() {
                         @Nullable
@@ -72,6 +73,7 @@ public class StudentController extends AbstractController {
                             ModelMap m = new ModelMap();
                             m.put("topicId", input.get(QTopic.topic.id));
                             m.put("topicName", input.get(QTopic.topic.name));
+                            m.put("describe", input.get(QTopic.topic.describe));
                             m.put("teacherName", input.get(QTeacher.teacher.name));
                             return m;
                         }

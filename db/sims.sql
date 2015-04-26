@@ -54,7 +54,7 @@ CREATE TABLE `student` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `sno_UNIQUE` (`sno`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='学生表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='学生表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,10 +69,11 @@ CREATE TABLE `teacher` (
   `sno` varchar(20) NOT NULL COMMENT '证件号',
   `name` varchar(20) NOT NULL COMMENT '姓名',
   `password` varchar(20) NOT NULL COMMENT '密码',
+  `status` int(1) NOT NULL DEFAULT '1' COMMENT '教师的状态(0: 被删除; 1: 正常)',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `sno_UNIQUE` (`sno`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='教师表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='教师表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,9 +88,10 @@ CREATE TABLE `topic` (
   `name` varchar(20) NOT NULL COMMENT '毕设题目',
   `teacher_id` int(12) NOT NULL COMMENT '出题教师ID',
   `student_id` int(12) DEFAULT NULL COMMENT '选题的学生ID',
+  `describe` varchar(500) DEFAULT NULL COMMENT '毕设题目信息',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='毕设题目表';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='毕设题目表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -101,4 +103,4 @@ CREATE TABLE `topic` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-02 23:15:00
+-- Dump completed on 2015-04-26 15:14:34

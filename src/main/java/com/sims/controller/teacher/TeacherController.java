@@ -50,7 +50,7 @@ public class TeacherController extends AbstractController {
                 List<Tuple> results = query.from(QTopic.topic).leftJoin(QStudent.student)
                         .on(QTopic.topic.studentId.eq(QStudent.student.id))
                         .where(QTopic.topic.teacherId.eq(teacher.getId()))
-                        .list(QTopic.topic.id, QTopic.topic.name, QStudent.student.name);
+                        .list(QTopic.topic.id, QTopic.topic.name, QTopic.topic.describe, QStudent.student.name);
                 if (null != results && !results.isEmpty()) {
                     list.addAll(Collections2.transform(results, new Function<Tuple, ModelMap>() {
                         @Nullable
@@ -59,6 +59,7 @@ public class TeacherController extends AbstractController {
                             ModelMap m = new ModelMap();
                             m.put("id", input.get(QTopic.topic.id));
                             m.put("topicName", input.get(QTopic.topic.name));
+                            m.put("describe", input.get(QTopic.topic.describe));
                             m.put("studentName", input.get(QStudent.student.name));
                             return m;
                         }
@@ -106,6 +107,7 @@ public class TeacherController extends AbstractController {
             public long execute(SQLInsertClause query) {
                 return query
                         .set(QTopic.topic.name, topic.getName())
+                        .set(QTopic.topic.describe, topic.getDescribe())
                         .set(QTopic.topic.teacherId, teacher.getId())
                         .execute();
             }
@@ -124,6 +126,7 @@ public class TeacherController extends AbstractController {
             public long execute(SQLUpdateClause query) {
                 return query.where(QTopic.topic.id.eq(topic.getId()))
                         .set(QTopic.topic.name, topic.getName())
+                        .set(QTopic.topic.describe, topic.getDescribe())
                         .execute();
             }
         });

@@ -16,6 +16,8 @@ public class Teacher {
 
     private String sno;
 
+    private Integer status;
+
     public Integer getId() {
         return id;
     }
@@ -46,6 +48,14 @@ public class Teacher {
 
     public void setSno(String sno) {
         this.sno = sno;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
 }

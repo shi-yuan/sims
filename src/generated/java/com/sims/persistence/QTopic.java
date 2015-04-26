@@ -24,6 +24,8 @@ public class QTopic extends com.mysema.query.sql.RelationalPathBase<Topic> {
 
     public static final QTopic topic = new QTopic("topic");
 
+    public final StringPath describe = createString("describe");
+
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
     public final StringPath name = createString("name");
@@ -55,6 +57,7 @@ public class QTopic extends com.mysema.query.sql.RelationalPathBase<Topic> {
     }
 
     public void addMetadata() {
+        addMetadata(describe, ColumnMetadata.named("describe").withIndex(5).ofType(Types.VARCHAR).withSize(500));
         addMetadata(id, ColumnMetadata.named("id").withIndex(1).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(name, ColumnMetadata.named("name").withIndex(2).ofType(Types.VARCHAR).withSize(20).notNull());
         addMetadata(studentId, ColumnMetadata.named("student_id").withIndex(4).ofType(Types.INTEGER).withSize(10));

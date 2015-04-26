@@ -8,6 +8,8 @@ import javax.annotation.Generated;
 @Generated("com.mysema.query.codegen.BeanSerializer")
 public class Topic {
 
+    private String describe;
+
     private Integer id;
 
     private String name;
@@ -15,6 +17,14 @@ public class Topic {
     private Integer studentId;
 
     private Integer teacherId;
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
+    }
 
     public Integer getId() {
         return id;

@@ -8,6 +8,7 @@
                 <tr>
                     <th>序号</th>
                     <th>毕设题目</th>
+                    <th>选题信息</th>
                     <th>选题学生</th>
                     <th>操作</th>
                 </tr>
@@ -16,6 +17,7 @@
                 <tr ng-repeat="item in topics">
                     <td ng-bind="$index + 1"></td>
                     <td ng-bind="item.topicName"></td>
+                    <td ng-bind="item.describe"></td>
                     <td ng-bind="item.studentName"></td>
                     <td>
                         <span ng-show="-1 < $index">

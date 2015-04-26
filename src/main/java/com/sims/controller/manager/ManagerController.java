@@ -8,6 +8,7 @@ import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.dml.SQLUpdateClause;
 import com.sims.AjaxResponse;
 import com.sims.controller.AbstractController;
+import com.sims.enums.TeacherStatus;
 import com.sims.persistence.*;
 import com.sims.persistence.sql.cmd.Insert;
 import com.sims.persistence.sql.cmd.Select;
@@ -126,7 +127,7 @@ public class ManagerController extends AbstractController {
         map.put("teachers", repositories.teacher.execute(new Select() {
             @Override
             public Object execute(SQLQuery query) {
-                return query.from(QTeacher.teacher).list(QTeacher.teacher);
+                return query.from(QTeacher.teacher).where(QTeacher.teacher.status.eq(TeacherStatus.NORMAL.value())).list(QTeacher.teacher);
             }
         }));
         return AjaxResponse.createSuccess(map);
@@ -194,6 +195,23 @@ public class ManagerController extends AbstractController {
     }
 
     /**
+     * 删除教师
+     */
+    @RequestMapping(value = "/teacher/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public Object deleteTeacher(final Teacher teacher) {
+        repositories.teacher.execute(new Update<QTeacher>() {
+            @Override
+            public long execute(SQLUpdateClause query) {
+                return query.where(QTeacher.teacher.sno.eq(teacher.getSno()))
+                        .set(QTeacher.teacher.status, TeacherStatus.DELETED.value())
+                        .execute();
+            }
+        });
+        return AjaxResponse.createSuccess();
+    }
+
+    /**
      * 获取毕设题目列表
      */
     @RequestMapping(value = "/topic/list", method = RequestMethod.GET)
@@ -207,7 +225,7 @@ public class ManagerController extends AbstractController {
                 List<Tuple> results = query.from(QTopic.topic)
                         .innerJoin(QTeacher.teacher).on(QTopic.topic.teacherId.eq(QTeacher.teacher.id))
                         .leftJoin(QStudent.student).on(QTopic.topic.studentId.eq(QStudent.student.id))
-                        .list(QTopic.topic.name, QTeacher.teacher.name, QStudent.student.name);
+                        .list(QTopic.topic.name, QTopic.topic.describe, QTeacher.teacher.name, QStudent.student.name);
                 if (null != results && !results.isEmpty()) {
                     list.addAll(Collections2.transform(results, new Function<Tuple, ModelMap>() {
                         @Nullable
@@ -215,6 +233,7 @@ public class ManagerController extends AbstractController {
                         public ModelMap apply(Tuple input) {
                             ModelMap m = new ModelMap();
                             m.put("topicName", input.get(QTopic.topic.name));
+                            m.put("describe", input.get(QTopic.topic.describe));
                             m.put("teacherName", input.get(QTeacher.teacher.name));
                             m.put("studentName", input.get(QStudent.student.name));
                             return m;

@@ -32,6 +32,8 @@ public class QTeacher extends com.mysema.query.sql.RelationalPathBase<Teacher> {
 
     public final StringPath sno = createString("sno");
 
+    public final NumberPath<Integer> status = createNumber("status", Integer.class);
+
     public final com.mysema.query.sql.PrimaryKey<Teacher> primary = createPrimaryKey(id);
 
     public QTeacher(String variable) {
@@ -59,6 +61,7 @@ public class QTeacher extends com.mysema.query.sql.RelationalPathBase<Teacher> {
         addMetadata(name, ColumnMetadata.named("name").withIndex(3).ofType(Types.VARCHAR).withSize(20).notNull());
         addMetadata(password, ColumnMetadata.named("password").withIndex(4).ofType(Types.VARCHAR).withSize(20).notNull());
         addMetadata(sno, ColumnMetadata.named("sno").withIndex(2).ofType(Types.VARCHAR).withSize(20).notNull());
+        addMetadata(status, ColumnMetadata.named("status").withIndex(5).ofType(Types.INTEGER).withSize(10).notNull());
     }
 
 }

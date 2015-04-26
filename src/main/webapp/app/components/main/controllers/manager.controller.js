@@ -146,6 +146,16 @@
                 }
             });
         };
+        // 删除教师
+        $scope.teacherDelete = function (sno) {
+            AjaxService.post('/manager/teacher/delete', {sno: sno}, function (data) {
+                if (data.success) {
+                    $scope.teacherList();
+                } else {
+                    alert('删除失败');
+                }
+            });
+        };
 
         // 查看选题情况
         // ====================

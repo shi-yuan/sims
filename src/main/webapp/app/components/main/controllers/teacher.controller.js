@@ -49,6 +49,9 @@
                             // 初始化表单域
                             angular.forEach(data.data.topic, function (value, key) {
                                 $('input[name="' + key + '"]').val(value);
+                                if ('describe' == key) {
+                                    $('textarea[name="describe"]').val(value);
+                                }
                             });
                         } else {
                             alert('获取毕设题目失败');

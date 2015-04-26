@@ -4,6 +4,7 @@ import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLUpdateClause;
 import com.sims.AjaxResponse;
 import com.sims.controller.AbstractController;
+import com.sims.enums.TeacherStatus;
 import com.sims.enums.UserIdentity;
 import com.sims.persistence.*;
 import com.sims.persistence.sql.cmd.Select;
@@ -51,7 +52,7 @@ public class CommonController extends AbstractController {
                 @Override
                 public Teacher execute(SQLQuery query) {
                     return query.from(QTeacher.teacher)
-                            .where(QTeacher.teacher.sno.eq(username).and(QTeacher.teacher.password.eq(password)))
+                            .where(QTeacher.teacher.sno.eq(username).and(QTeacher.teacher.password.eq(password)).and(QTeacher.teacher.status.eq(TeacherStatus.NORMAL.value())))
                             .singleResult(QTeacher.teacher);
                 }
             });
